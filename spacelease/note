@@ -8,6 +8,10 @@ Telling an HTTP response is cached or not
       Content-Length: 30726
 
 
+dstat loggin
+  ~/work/dstat$ \dstat -tTcdnrmy --output `date +'%y%m%d-%H%M%S'`.csv
+
+
 Deployment on Ubuntu16.04
 -------------------------
 time autoreconf -if
