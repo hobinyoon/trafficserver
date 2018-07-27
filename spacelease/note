@@ -1,0 +1,48 @@
+Telling an HTTP response is cached or not
+  $ wget --save-headers http://127.0.0.1:8080/app/index.py/app?cp_id=123\&obj_id=123456789012346\&req_id=1
+  $ wget --save-headers http://127.0.0.1:8080/app/index.py/app?cp_id=123\&obj_id=123456789012346\&req_id=1
+  $ vimdiff app\?cp_id\=123\&obj_id\=123456789012346\&req_id\=1\.*
+    Miss
+      Transfer-Encoding: chunked
+    Hit
+      Content-Length: 30726
+
+
+Deployment on Ubuntu16.04
+-------------------------
+time autoreconf -if
+
+time sudo apt install -y libcurl4-openssl-dev libssl-dev tcl-dev libpcre3-dev
+  Not sure if you need libcurl4-openssl-dev
+
+If you use the default compiler, you get
+  ink_memory.h:30:23: fatal error: string_view: No such file or directory
+
+You need gcc7 for C++17
+  Follow the instructions at https://cwiki.apache.org/confluence/display/TS/Ubuntu
+
+CC=/usr/bin/gcc-7 CXX=/usr/bin/g++-7 time ./configure
+
+time make -j2
+  10m14.129s
+
+sudo make install
+
+Check configuration file locations
+  LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/traffic_layout
+
+Run
+  sudo LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/traffic_server
+
+
+Configuration
+-------------
+Not sure how to set the cache eviction algorithm to LRU
+  This didn't work
+    /usr/local/etc/trafficserver/records.config
+    # 0: CLFUS
+    # 1: LRU
+    CONFIG proxy.config.cache.ram_cache.algorithm INT 1
+
+CONFIG proxy.config.http_ui_enabled INT 1 
+  Didn't work. Because Apache is already running? Can you change the port? Not important for now.
