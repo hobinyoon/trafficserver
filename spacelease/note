@@ -50,3 +50,11 @@ Not sure how to set the cache eviction algorithm to LRU
 
 CONFIG proxy.config.http_ui_enabled INT 1 
   Didn't work. Because Apache is already running? Can you change the port? Not important for now.
+
+
+Log
+---
+Cache log file: /usr/local/var/log/trafficserver/squid.blog
+  How to read: https://docs.trafficserver.apache.org/en/5.3.x/reference/commands/traffic_logcat.en.html
+  Follow: $ LD_LIBRARY_PATH=/usr/local/lib traffic_logcat -f /usr/local/var/log/trafficserver/squid.blog
+  Squid... they might be reusing the same format as squid.
